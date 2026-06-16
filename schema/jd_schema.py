@@ -17,6 +17,7 @@ class ExperienceRange(BaseModel):
 
 class JDSchema(BaseModel):
     preferred_locations: List[str] = Field(default_factory=list)
+    additional_locations: List[str] = Field(default_factory=list)
     relocation_preferred: bool = Field(default=False)
 
     employment_type: List[str] = Field(default_factory=list)
