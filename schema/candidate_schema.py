@@ -10,7 +10,7 @@ class Profile(BaseModel):
     summary: str
     location: str
     country: str
-    years_of_experience: int
+    years_of_experience: float
     current_title: Optional[str] = Field(None)
     current_company: Optional[str] = Field(None)
     current_company_size: str
