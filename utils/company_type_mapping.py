@@ -100,3 +100,9 @@ COMPANY_TYPE_MAP = {
     "EY": "service",
     
 }
+
+STARTUP_SIZES = {
+    "1-10",
+    "11-50",
+    "51-200",
+}
