@@ -46,6 +46,7 @@ COMPANY_TYPE_MAP = {
     "Unacademy": "product",
     "Vedantu": "product",
     "upGrad": "product",
+    "Uber": "product",
 
     # ================= SERVICE =================
 
@@ -71,7 +72,6 @@ COMPANY_TYPE_MAP = {
     "Globex Inc": "unknown",
     "Initech": "unknown",
     "Acme Corp": "unknown",
-
 
     # ================= ADDITIONAL PRODUCT COMPANIES =================
     
