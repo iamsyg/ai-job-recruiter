@@ -37,7 +37,7 @@ class CareerHistory(BaseModel):
 
 class Academics(BaseModel):
     grade_category: str = None
-    tier: str = Literal("Tier 1", "Tier 2", "Tier 3", "Unknown")
+    tier: str = Literal("tier_1", "tier_2", "tier_3", "tier_4", "Unknown")
 
 class Education(BaseModel):
     academics: List[Academics]
@@ -50,7 +50,7 @@ class SkillFeatures(BaseModel):
     count: int
     max_duration: int
     avg_duration: float
-    max_proficiency: int
+    max_proficiency: int   # [1-4] based on PROFICIENCY_MAP
     endorsements: int
 
 class Skills(BaseModel):
@@ -60,8 +60,11 @@ class Certification(BaseModel):
     ai_ml_cert_count: int
     cloud_cert_count: int
 
+class Language(BaseModel):
+    is_english_proficient: bool
+
 class RedrobSignals(BaseModel):
-    profile_completeness_category: str = Literal("excellent", "good", "average", "poor")
+    profile_completeness_category: str = Literal("excellent", "good", "average", "poor", "unknown")
     invalid_activity_dates: bool
     since_last_active_days: int | None
     open_to_work_flag: bool
@@ -95,4 +98,5 @@ class CandidateFeatures(BaseModel):
     education: Education
     skills: Skills
     certifications: Certification
+    is_english_proficient: Language
     redrob_signals: RedrobSignals
