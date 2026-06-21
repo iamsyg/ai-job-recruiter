@@ -1,17 +1,17 @@
 # utils/certificates/certificates.py
 
 AI_ML_CERTS = {
-    "LangChain for LLM Application Development",
-    "Deep Learning Specialization",
-    "AWS Certified Machine Learning Specialty",
-    "Google Cloud Professional ML Engineer",
-    "NLP Specialization",
+    "langchain for llm application development",
+    "deep learning specialization",
+    "aws certified machine learning specialty",
+    "google cloud professional ml engineer",
+    "nlp specialization",
 }
 
 CLOUD_CERTS = {
-    "AWS Certified Machine Learning Specialty",
-    "AWS Certified Cloud Practitioner",
-    "Google Cloud Professional ML Engineer",
+    "aws certified machine learning specialty",
+    "aws certified cloud practitioner",
+    "google cloud professional ml engineer",
 }
 
 AI_ML_CERT_KEYWORDS = {

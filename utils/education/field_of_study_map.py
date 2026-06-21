@@ -2,26 +2,26 @@
 
 FIELD_OF_STUDY_SCORE = {
     # Direct matches
-    "Artificial Intelligence": 1.00,
-    "Machine Learning": 1.00,
-    "Data Science": 0.95,
-    "Computer Science": 0.95,
-    "Computer Engineering": 0.90,
-    "Information Technology": 0.90,
+    "artificial intelligence": 1.00,
+    "machine learning": 1.00,
+    "data science": 0.95,
+    "computer science": 0.95,
+    "computer engineering": 0.90,
+    "information technology": 0.90,
 
     # Related engineering
-    "Electronics": 0.80,
-    "Electrical Engineering": 0.70,
-    "Mathematics": 0.65,
-    "Statistics": 0.65,
-    "Physics": 0.60,
+    "electronics": 0.80,
+    "electrical engineering": 0.70,
+    "mathematics": 0.65,
+    "statistics": 0.65,
+    "physics": 0.60,
 
     # Adjacent engineering
-    "Mechanical Engineering": 0.30,
-    "Chemical Engineering": 0.30,
-    "Civil Engineering": 0.25,
+    "mechanical engineering": 0.30,
+    "chemical engineering": 0.30,
+    "civil engineering": 0.25,
 
     # Non-technical
-    "Commerce": 0.05,
-    "MBA": 0.05,
+    "commerce": 0.05,
+    "mba": 0.05,
 }
