@@ -10,6 +10,7 @@ class Profile(BaseModel):
     willing_to_relocate: bool
     country_match: bool
     experience_match: bool
+    employment_eligibility_match: bool
     summary_text: str
 
 class CareerHistory(BaseModel):
@@ -17,15 +18,19 @@ class CareerHistory(BaseModel):
     has_suspicious_career_dates: bool
     has_it_engineering_industry: bool
 
-    startup_based_experience: int
+    # startup_based_experience: int
     startup_based_experience_ratio: float
     startup_based_experience_months: int
 
-    product_based_experience: int
+    # product_based_experience: int
     product_based_experience_ratio: float
     product_based_experience_months: int
 
-    unknown_company_experience: int
+    # service_based_experience: int
+    service_based_experience_ratio: float
+    service_based_experience_months: int
+
+    # unknown_company_experience: int
     unknown_company_experience_ratio: float
     unknown_company_experience_months: int
 
