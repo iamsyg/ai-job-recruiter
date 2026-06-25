@@ -1,6 +1,7 @@
 # src/extract_candidate_features.py
 
 from datetime import datetime
+import re
 
 from schema.candidate_schema import CandidateSchema
 
@@ -56,29 +57,47 @@ def is_it_industry(industry: str) -> bool:
     )
 
 
+def extract_float(value):
+    if value is None:
+        return None
+
+    match = re.search(r"\d+(?:\.\d+)?", str(value))
+
+    if match:
+        return float(match.group())
+
+    return None
 
 
 
 def categorize_grade(grade):
 
-    if grade is None:
+    score = extract_float(grade)
+
+    if score is None:
         return "unknown"
 
-    grade = str(grade).strip().lower()
-
-    try:
-      
-        if grade[0] >= "8":
+    # CGPA scale
+    if score <= 10:
+        if score >= 8:
             return "excellent"
-        elif grade[0] >= "7":
+        elif score >= 7:
             return "good"
-        elif grade[0] >= "6":
+        elif score >= 6:
             return "average"
         else:
             return "poor"
 
-    except ValueError:
-        return "unknown"
+    # Percentage scale
+    else:
+        if score >= 80:
+            return "excellent"
+        elif score >= 70:
+            return "good"
+        elif score >= 60:
+            return "average"
+        else:
+            return "poor"
 
 
 
@@ -87,7 +106,7 @@ def categorize_grade(grade):
 
 
 
-def extract_candidate_features(candidate: CandidateSchema, jd_features):
+def extract_profile_features(candidate: CandidateSchema, jd_features):
 
     # skills = [s.name for s in candidate.skills]
 
@@ -100,44 +119,90 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
 
     # =================================================== PROFILE ================================
 
-    candidate_city = candidate.profile.location.split(",")[0].strip().lower()
+    candidate_locations = {
+        part.strip().lower()
+        for part in candidate.profile.location.split(",")
+    }
 
-    location_match = any(
-        candidate_city == loc.lower()
-        for loc in (
-            jd_features["preferred_locations"] +
-            jd_features["additional_locations"]
+    jd_locations = set()
+
+    for loc in (
+        jd_features["preferred_locations"] +
+        jd_features["additional_locations"]
+    ):
+        jd_locations.update(
+            part.strip().lower()
+            for part in loc.split(",")
         )
-    )
+
+    location_match = bool(candidate_locations & jd_locations)
 
     # print(f"candidate matches location: {location_match} - candidate city: {candidate_city}")
 
-    experience_match = (
-        jd_features["experience_required"]["min"]
-        <= candidate.profile.years_of_experience
-        <= jd_features["experience_required"]["max"]
-    )
+    min_exp = jd_features["experience_required"]["min"]
+    max_exp = jd_features["experience_required"]["max"]
+    candidate_years = candidate.profile.years_of_experience
+
+    if min_exp <= candidate_years <= max_exp:
+        experience_gap = 0
+    elif candidate_years < min_exp:
+        experience_gap = min_exp - candidate_years
+    elif candidate_years > max_exp:
+        experience_gap = candidate_years - max_exp
+
+    # experience_match = (
+    #     jd_features["experience_required"]["min"]
+    #     <= candidate.profile.years_of_experience
+    #     <= jd_features["experience_required"]["max"]
+    # )
 
     country_match = (
         candidate.profile.country.lower() == "india"
     )
+
+    CURRENT_YEAR = datetime.now().year
+
+    is_currently_studying = any(
+        edu.end_year >= CURRENT_YEAR
+        for edu in candidate.education
+    )
+
+    employment_types = {
+        e.strip().lower()
+        for e in jd_features["employment_type"]
+    }
+
+    employment_eligibility_match = True
+
+    if ("full-time" in employment_types and is_currently_studying):
+        employment_eligibility_match = False
 
     profile = {
         "candidate_id": candidate.candidate_id,
         "location_match": location_match,
         "willing_to_relocate": candidate.redrob_signals.willing_to_relocate,
         "country_match": country_match,
-        "experience_match": experience_match,
+        "experience_gap": experience_gap,
+        "employment_eligibility_match": employment_eligibility_match,
         "summary_text": summary_text,
     }
 
-    # =================================================== CAREER HISTORY ================================
+    return profile
 
-    startup_based_experience = sum(
-        1
+    # =================================================== CAREER HISTORY ==============================================
+
+def extract_career_history_features(candidate: CandidateSchema):
+
+    total_months = sum(
+        role.duration_months
         for role in candidate.career_history
-        if role.company_size in STARTUP_SIZES
     )
+
+    # startup_based_experience = sum(
+    #     1
+    #     for role in candidate.career_history
+    #     if role.company_size in STARTUP_SIZES
+    # )
 
     start_based_experience_months = sum(
         role.duration_months
@@ -145,13 +210,18 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
         if role.company_size in STARTUP_SIZES
     )
 
-    start_up_based_experience_ratio = startup_based_experience / len(candidate.career_history) if len(candidate.career_history) > 0 else 0
+    # start_up_based_experience_ratio = startup_based_experience / len(candidate.career_history) if len(candidate.career_history) > 0 else 0
 
-    product_based_experience = sum(
-        1
-        for role in candidate.career_history
-        if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "product"
+    start_up_based_experience_ratio = (
+        start_based_experience_months / total_months
+        if total_months > 0 else 0
     )
+
+    # product_based_experience = sum(
+    #     1
+    #     for role in candidate.career_history
+    #     if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "product"
+    # )
 
     product_based_experience_months = sum(
         role.duration_months
@@ -159,13 +229,18 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
         if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "product"
     )
 
-    product_based_experience_ratio = product_based_experience / len(candidate.career_history) if len(candidate.career_history) > 0 else 0
+    # product_based_experience_ratio = product_based_experience / len(candidate.career_history) if len(candidate.career_history) > 0 else 0
 
-    service_based_experience = sum(
-        1
-        for role in candidate.career_history
-        if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "service"
+    product_based_experience_ratio = (
+        product_based_experience_months / total_months
+        if total_months > 0 else 0
     )
+    
+    # service_based_experience = sum(
+    #     1
+    #     for role in candidate.career_history
+    #     if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "service"
+    # )
 
     service_based_experience_months = sum(
         role.duration_months
@@ -173,13 +248,18 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
         if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "service"
     )
 
-    service_based_experience_ratio = service_based_experience / len(candidate.career_history) if len(candidate.career_history) > 0 else 0
+    # service_based_experience_ratio = service_based_experience / len(candidate.career_history) if len(candidate.career_history) > 0 else 0
 
-    unknown_company_experience = sum(
-        1
-        for role in candidate.career_history
-        if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "unknown"
+    service_based_experience_ratio = (
+        service_based_experience_months / total_months
+        if total_months > 0 else 0
     )
+
+    # unknown_company_experience = sum(
+    #     1
+    #     for role in candidate.career_history
+    #     if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "unknown"
+    # )
 
     unknown_company_experience_months = sum(
         role.duration_months
@@ -187,7 +267,12 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
         if COMPANY_TYPE_MAP.get(role.company.strip().lower()) == "unknown"
     )
 
-    unknown_company_experience_ratio = unknown_company_experience / len(candidate.career_history) if len(candidate.career_history) > 0 else 0
+    # unknown_company_experience_ratio = unknown_company_experience / len(candidate.career_history) if len(candidate.career_history) > 0 else 0
+
+    unknown_company_experience_ratio = (
+        unknown_company_experience_months / total_months
+        if total_months > 0 else 0
+    )
 
     career_gap_months = 0
 
@@ -280,21 +365,21 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
             "has_it_engineering_industry": has_it_engineering_industry,
             # "tech_industry_months": tech_industry_months,
 
-            "start_up_based_experience": startup_based_experience,
+            # "start_up_based_experience": startup_based_experience,
             "startup_based_experience_ratio": start_up_based_experience_ratio,
             "startup_based_experience_months": start_based_experience_months,
 
-            "product_based_experience": product_based_experience,
+            # "product_based_experience": product_based_experience,
             "product_based_experience_ratio": product_based_experience_ratio,
             "product_based_experience_months": product_based_experience_months,
 
             # Penalize service based experience if more than 50% of total experience is service based
 
-            "service_based_experience": service_based_experience,
+            # "service_based_experience": service_based_experience,
             "service_based_experience_ratio": service_based_experience_ratio,
             "service_based_experience_months": service_based_experience_months,
 
-            "unknown_company_experience": unknown_company_experience,
+            # "unknown_company_experience": unknown_company_experience,
             "unknown_company_experience_ratio": unknown_company_experience_ratio,
             "unknown_company_experience_months": unknown_company_experience_months, 
 
@@ -309,7 +394,11 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
     
     # print(f"Candidate {candidate.candidate_id} - Career features: {career_history}")
 
+    return career_history
+
     # ================================================== EDUCATION ================================
+
+def extract_education_features(candidate: CandidateSchema):
 
     suspicious_education_date_records = any(
         (
@@ -322,46 +411,64 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
         for edu in candidate.education
     )
 
-    max_field_of_study_score = max(
-    (
-            FIELD_OF_STUDY_SCORE.get(
-                edu.field_of_study.split().lower(),
-                0.0
-            )
-            for edu in candidate.education
+
+    education_records = []
+
+    for edu in candidate.education:
+
+        field_score = FIELD_OF_STUDY_SCORE.get(
+            edu.field_of_study.strip().lower(),
+            0.0
+        )
+
+        degree_score = DEGREE_SCORE.get(
+            edu.degree.strip().lower(),
+            0.0
+        )
+
+        education_records.append(
+            {
+                "field_score": field_score,
+                "degree_score": degree_score,
+                "grade_category": categorize_grade(edu.grade),
+                "tier": edu.tier,
+            }
+        )
+
+    most_relevant = max(
+        education_records,
+        key=lambda x: (
+            x["field_score"],
+            x["degree_score"]
         ),
-        default=0.0
+        default=None,
     )
 
-    max_degree_score = max(
-        (
-            DEGREE_SCORE.get(
-                edu.degree.lower(),
-                0.0
-            )
-            for edu in candidate.education
-        ),
-        default=0.0
-    )
+    if most_relevant is None:
 
-    academics = [
-        {
-            "grade_category": categorize_grade(edu.grade),
-            "tier": edu.tier,
+        return {
+            "relevant_field_of_study_score": 0.0,
+            "relevant_degree_score": 0.0,
+            "relevant_grade_category": "unknown",
+            "relevant_tier": "Unknown",
+            "has_suspicious_education_dates": suspicious_education_date_records,
         }
-        for edu in candidate.education
-    ]
 
-    education = {
-        "academics": academics,
-        "max_field_of_study_score": max_field_of_study_score,
-        "max_degree_score": max_degree_score,
+    return {
+        "relevant_field_of_study_score": most_relevant["field_score"],
+        "relevant_degree_score": most_relevant["degree_score"],
+
+        "relevant_grade_category": most_relevant["grade_category"],
+        "relevant_tier": most_relevant["tier"],
+
         "has_suspicious_education_dates": suspicious_education_date_records,
     }
 
     # print(f"Candidate {candidate.candidate_id} - Education: {education}")
     
-    # ================================================= SKILLS ================================
+    # ================================================= SKILLS ==============================================================
+
+def extract_skills_features(candidate: CandidateSchema):
 
     skill_features = {}
 
@@ -402,8 +509,12 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
     }
 
     # print(f"Candidate {candidate.candidate_id} - Skills: {skills}")
+
+    return skills
     
     # ==================================================== CERTIFICATIONS ============================================
+
+def extract_certification_features(candidate: CandidateSchema):
 
     ai_ml_cert_count = 0
     cloud_cert_count = 0
@@ -432,15 +543,39 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
         ):
             cloud_cert_count += 1
 
+    CURRENT_YEAR = datetime.now().year
+
+    suspicious_certifications = any(
+        cert.year < 1990
+        or cert.year > CURRENT_YEAR
+        for cert in candidate.certifications
+    )
+
     certification = {
         "ai_ml_cert_count": ai_ml_cert_count,
         "cloud_cert_count": cloud_cert_count,
+        "suspicious_certifications": suspicious_certifications
     }
 
     # print(f"Candidate {candidate.candidate_id} - Certifications: {certification_features}")
 
+    return certification
+
+    # =================================================== LANGUAGES =========================================================
+
+def extract_language_features(candidate: CandidateSchema):
+
+    is_english_proficient = any(
+        lang.language.strip().lower() == "english" and
+        lang.proficiency.strip().lower() in ["native", "professional", "conversational"]
+        for lang in candidate.languages
+    )
+
+    return is_english_proficient
 
     # ==================================================== REDROB SIGNALS ============================================
+
+def extract_redrob_signals(candidate: CandidateSchema, jd_features):
 
     profile_completeness_score = candidate.redrob_signals.profile_completeness_score
 
@@ -484,31 +619,27 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
         max(profile_views_received_30d, 1)
     )
 
-    recruiter_interest_score = save_rate
+    save_without_view_anomaly = (
+        saved_by_recruiters_30d >
+        profile_views_received_30d
+    )
+
+    # NOTE CHECK
+    recruiter_interest = (
+        saved_by_recruiters_30d +
+        0.1 * profile_views_received_30d
+    )
 
     recruiter_response_rate = candidate.redrob_signals.recruiter_response_rate
     avg_response_time_hours = candidate.redrob_signals.avg_response_time_hours
 
-    response_score = (
-        recruiter_response_rate *
-        (1 / max(avg_response_time_hours, 1))
-    )
+    # response_score = (
+    #     recruiter_response_rate *
+    #     (1 / max(avg_response_time_hours, 1))
+    # )
 
     connection_count = candidate.redrob_signals.connection_count
     endorsements_received = candidate.redrob_signals.endorsements_received
-
-    network_strength = (
-        connection_count +
-        endorsements_received
-    )
-
-    interview_completion_rate = candidate.redrob_signals.interview_completion_rate
-    offer_acceptance_rate = candidate.redrob_signals.offer_acceptance_rate
-
-    hiring_reliability = (
-        interview_completion_rate,
-        offer_acceptance_rate
-    )
 
     github_activity_score = max(
         candidate.redrob_signals.github_activity_score,
@@ -517,13 +648,14 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
 
     github_linked = candidate.redrob_signals.github_activity_score != -1
 
-    notice_period_match = (
-        candidate.redrob_signals.notice_period_days
-        <= jd_features["notice_period"] or 30
+    required_notice = jd_features["notice_period"] or 30
+
+    notice_period_gap = max(
+        candidate.redrob_signals.notice_period_days - required_notice,
+        0
     )
 
     jd_salary_max = jd_features["salary_range"]["max"] 
-
     candidate_min = (
         candidate.redrob_signals.expected_salary_range_inr_lpa.min
     )
@@ -534,10 +666,11 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
     # )
 
     if jd_salary_max is None:
-        salary_match = None
+        salary_gap = None
     else:
-        salary_match = (
-            candidate_min <= jd_salary_max
+        salary_gap = max(
+            candidate_min - jd_salary_max,
+            0
         )
 
     interview_completion_rate = candidate.redrob_signals.interview_completion_rate
@@ -589,27 +722,39 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
         "invalid_activity_dates": invalid_activity_dates,
         "since_last_active_days": since_last_active_days,
         "open_to_work_flag": candidate.redrob_signals.open_to_work_flag,
+
         "view_rate": view_rate,
         "save_rate": save_rate,
-        "recruiter_interest_score": recruiter_interest_score,
-        "response_score": response_score,
-        "network_strength": network_strength,
-        "hiring_reliability": hiring_reliability,
+        "save_without_view_anomaly": save_without_view_anomaly,
+        "recruiter_interest": recruiter_interest,
+        # "response_score": response_score,
+        "recruiter_response_rate": recruiter_response_rate,
+        "avg_response_time_hours": avg_response_time_hours,
+
+        "connection_count": connection_count,
+        "endorsements_received": endorsements_received,
+
+        # "hiring_reliability": hiring_reliability,
+
+        "notice_period_gap": notice_period_gap,
+        "salary_gap": salary_gap,
+
+        "work_mode_match": work_mode_match,
+        # "willing_to_relocate": candidate.redrob_signals.willing_to_relocate,
+
         "github_activity_score": github_activity_score,
         "github_linked": github_linked,
-        "notice_period_match": notice_period_match,
-        "salary_match": salary_match,
+        
         "interview_completion_rate": interview_completion_rate,
         "offer_acceptance_rate": offer_acceptance_rate,
         "has_offer_history": has_offer_history,
+
         "assessment_features": assessment_features,
         # "recruiter_response_rate": candidate.redrob_signals.recruiter_response_rate,
         # "avg_response_time_hours": candidate.redrob_signals.avg_response_time_hours,
         # "skill_assessment_scores": candidate.redrob_signals.skill_assessment_scores,
-        "notice_period_days": candidate.redrob_signals.notice_period_days,
         # "expected_salary_range_inr_lpa": candidate.redrob_signals.expected_salary_range_inr_lpa,
-        "work_mode_match": work_mode_match,
-        "willing_to_relocate": candidate.redrob_signals.willing_to_relocate,
+        
         "verified_email": candidate.redrob_signals.verified_email,
         "verified_phone": candidate.redrob_signals.verified_phone,
         "linkedin_connected": candidate.redrob_signals.linkedin_connected, 
@@ -617,11 +762,14 @@ def extract_candidate_features(candidate: CandidateSchema, jd_features):
 
     # print(f"Candidate {candidate.candidate_id} - Redrob signals: {redrob_signals}")
 
-    return {
-        "profile": profile,
-        "career_history": career_history,
-        "education": education,
-        "skills": skills,
-        "certifications": certification,
-        "redrob_signals": redrob_signals,
-    }
+    return redrob_signals
+
+    # return {
+    #     "profile": profile,
+    #     "career_history": career_history,
+    #     "education": education,
+    #     "skills": skills,
+    #     "certifications": certification,
+    #     "is_english_proficient": is_english_proficient,
+    #     "redrob_signals": redrob_signals,
+    # }
