@@ -9,7 +9,8 @@ class Profile(BaseModel):
     location_match: bool
     willing_to_relocate: bool
     country_match: bool
-    experience_match: bool
+    # experience_match: bool
+    experience_gap: int
     employment_eligibility_match: bool
     summary_text: str
 
@@ -40,14 +41,12 @@ class CareerHistory(BaseModel):
     current_title_match: bool
     current_ai_ml_title_match: bool
 
-class Academics(BaseModel):
-    grade_category: str = None
-    tier: str = Literal("tier_1", "tier_2", "tier_3", "tier_4", "Unknown")
-
 class Education(BaseModel):
-    academics: List[Academics]
-    max_field_of_study_score: float
-    max_degree_score: float
+
+    relevant_field_of_study_score: float
+    relevant_degree_score: float
+    relevant_grade_category: str
+    relevant_tier: str
     has_suspicious_education_dates: bool
 
 class SkillFeatures(BaseModel):
@@ -64,6 +63,7 @@ class Skills(BaseModel):
 class Certification(BaseModel):
     ai_ml_cert_count: int
     cloud_cert_count: int
+    suspicious_certifications: bool
 
 class Language(BaseModel):
     is_english_proficient: bool
@@ -73,35 +73,47 @@ class RedrobSignals(BaseModel):
     invalid_activity_dates: bool
     since_last_active_days: int | None
     open_to_work_flag: bool
+
     view_rate: float
     save_rate: float
-    recruiter_interest_score: float
-    response_score: float
-    network_strength: float
-    hiring_reliability: Tuple[float, float]
+    save_without_view_anomaly: bool
+    recruiter_interest: float
+    # response_score: float
+    recruiter_response_rate: float
+    avg_response_time_hours: float
+
+    connection_count: int
+    endorsements_received: int
+
+    # hiring_reliability: Tuple[float, float]
+
+    notice_period_gap: int
+    salary_gap: int | None
+
+    work_mode_match: bool
+    # willing_to_relocate: bool
+
     github_activity_score: float
     github_linked: bool
-    notice_period_match: bool
-    salary_match: bool | None
+
     interview_completion_rate: float
     offer_acceptance_rate: float
     has_offer_history: bool
+
     assessment_features: Dict[str, dict]
-    notice_period_days: int
-    work_mode_match: bool
-    willing_to_relocate: bool
+    
     verified_email: bool
     verified_phone: bool
     linkedin_connected: bool
 
 
 
-class CandidateFeatures(BaseModel):
+# class CandidateFeatures(BaseModel):
 
-    profile: Profile
-    career_history: CareerHistory
-    education: Education
-    skills: Skills
-    certifications: Certification
-    is_english_proficient: Language
-    redrob_signals: RedrobSignals
+#     profile: Profile
+#     career_history: CareerHistory
+#     education: Education
+#     skills: Skills
+#     certifications: Certification
+#     is_english_proficient: Language
+#     redrob_signals: RedrobSignals
