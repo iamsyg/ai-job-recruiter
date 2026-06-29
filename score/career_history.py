@@ -36,7 +36,7 @@ def career_history_score(career_history: CareerHistory) -> float:
 
     if career_history.startup_based_experience_ratio >= 0.50:
         score += 0.20
-    elif career_history.startup_based_experience_ratio >= 0.25:
+    elif career_history.startup_based_experience_ratio >= 0.20:
         score += 0.10
     elif career_history.startup_based_experience_ratio >= 0.10:
         score += 0.05
@@ -49,11 +49,11 @@ def career_history_score(career_history: CareerHistory) -> float:
     elif career_history.product_based_experience_months >= 12:
         score += 0.15
 
-    if career_history.product_based_experience_ratio >= 0.35:
+    if career_history.product_based_experience_ratio >= 0.70:
         score += 0.20
-    elif career_history.product_based_experience_ratio >= 0.25:
+    elif career_history.product_based_experience_ratio >= 0.50:
         score += 0.15
-    elif career_history.product_based_experience_ratio >= 0.15:
+    elif career_history.product_based_experience_ratio >= 0.30:
         score += 0.10
     elif career_history.product_based_experience_ratio >= 0.10:
         score += 0.05
