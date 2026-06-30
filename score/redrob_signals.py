@@ -56,7 +56,7 @@ def redrob_signals_score(redrob_signals: RedrobSignals) -> float:
         score += 0.05
 
 
-    if not redrob_signals.save_rate_anomaly:
+    if not redrob_signals.save_without_view_anomaly:
         if redrob_signals.save_rate > 0.5:
             score += 0.20
         elif redrob_signals.save_rate > 0.3:

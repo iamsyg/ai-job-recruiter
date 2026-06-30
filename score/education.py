@@ -39,8 +39,8 @@ def education_score(education: Education) -> float:
         score += 0.03
 
 
-    score += education.max_field_of_study_score * 0.10
-    score += education.max_degree_score * 0.05
+    score += education.relevant_field_of_study_score * 0.10
+    score += education.relevant_degree_score * 0.05
 
 
     if education.has_suspicious_education_dates:
