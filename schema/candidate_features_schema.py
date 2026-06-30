@@ -10,7 +10,7 @@ class Profile(BaseModel):
     willing_to_relocate: bool
     country_match: bool
     # experience_match: bool
-    experience_gap: int
+    experience_gap: float
     employment_eligibility_match: bool
     summary_text: str
 
@@ -69,7 +69,7 @@ class Language(BaseModel):
     is_english_proficient: bool
 
 class RedrobSignals(BaseModel):
-    profile_completeness_category: str = Literal("excellent", "good", "average", "poor", "unknown")
+    profile_completeness_category: Literal["excellent", "good", "average", "poor", "unknown"]
     invalid_activity_dates: bool
     since_last_active_days: int | None
     open_to_work_flag: bool
