@@ -7,16 +7,16 @@ confidence score per category instead of a boolean keyword hit.
 
 PROTOTYPES = {
     "research_only": [
-        "Conducted academic research with publications, no production deployment experience.",
-        "PhD research role focused on novel algorithms, never shipped to real users.",
-        "Research scientist at a university lab, work was theoretical and experimental, not productionized.",
-        "My work has been entirely on closed-source proprietary systems, no production-facing engineering.",
-        "Published papers on machine learning algorithms with no production engineering experience.",
-        "Academic researcher developing novel deep learning methods evaluated only on benchmark datasets.",
-        "Focused on experimentation, literature review, and model evaluation rather than production systems.",
-        "Research assistant building experimental NLP models for publications.",
-        "Implemented algorithms for academic conferences instead of commercial applications.",
-        "Worked on theoretical optimization and statistical learning with no engineering ownership.",
+        "Spent an entire career in academia with no experience building production software systems.",
+        "Academic researcher focused exclusively on publishing papers and conducting experiments, without industry engineering experience.",
+        "Research scientist whose work remained in university laboratories and benchmark evaluations rather than real-world products.",
+        "Completed a PhD and continued in academic research without shipping production machine learning systems.",
+        "Worked as a research assistant developing experimental models for publications instead of commercial applications.",
+        "Career centered around theoretical machine learning research with no ownership of production infrastructure or deployed services.",
+        "Developed novel algorithms for academic conferences but never built systems used by customers.",
+        "Primary responsibilities were literature review, experimentation, and paper writing rather than software engineering.",
+        "Focused on advancing research through publications, with little or no exposure to production engineering practices.",
+        "Built experimental prototypes for academic evaluation without maintaining or deploying production machine learning systems."
     ],
     "architecture_no_code": [
         "Moved into an architecture or tech lead role and no longer writes production code.",

@@ -109,32 +109,55 @@ def _architecture_no_code_structural(candidate: CandidateSchema) -> float:
 
 def extract_disqualifier_features(candidate: CandidateSchema, proto_vecs: dict, candidate_embedding) -> dict:
 
+    CONF_THRESHOLDS = {
+        # (floor, ceil)
+        # floor = ~P75 of full population (above noise, below signal)
+        # ceil  = ~P95 (clearly matching the disqualifier)
+        "research_only":              (0.51, 0.56),
+        "architecture_no_code":       (0.57, 0.62),
+        "langchain_wrapper_only":     (0.59, 0.65),
+        "cv_speech_robotics_only":    (0.58, 0.65),
+        "nlp_ir_exposure":            (0.53, 0.61),  # positive signal, same logic
+    }
+
     sim = {
         group: float((candidate_embedding @ proto_vecs[group].T).max())
         for group in proto_vecs
     }
 
+    if candidate.candidate_id == "CAND_0007411":
+        print("Disqualifier sims for CAND_0007411")
+        print(sim["research_only"])
+        print("\n \n \n")
+
 
     # cosine sims for short prototype-vs-document text typically land ~0.1–0.5;
     # rescale relative to the production_shipped baseline so scores are comparable
-    def conf(group, floor=0.5, ceil=0.6):
-        return round(max(0.0, min(1.0, (sim[group] - floor) / (ceil - floor))), 3)
+    def conf(group: str, sim_val: float) -> float:
+        floor, ceil = CONF_THRESHOLDS[group]
 
-    research_conf = conf("research_only")
-    arch_conf = max(conf("architecture_no_code"), _architecture_no_code_structural(candidate))
-    langchain_only_conf = conf("langchain_wrapper_only")
+        if group == "research_only" and candidate.candidate_id == "CAND_0007411":
 
-    cv_speech_sim = conf("cv_speech_robotics_only")
-    nlp_ir_sim = conf("nlp_ir_exposure")
-    # confidence that candidate is CV/speech/robotics WITHOUT NLP/IR grounding
-    cv_without_nlp_conf = round(max(0.0, cv_speech_sim - nlp_ir_sim), 3)
+            print(f"research_only sim: {sim_val}, floor: {floor}, ceil: {ceil}")
+            value = (sim[group] - floor) / (ceil - floor)
+            print(group, sim[group], value)
+            
+        return round(max(0.0, min(1.0, (sim_val - floor) / (ceil - floor))), 3)
+
+    research_conf    = conf("research_only", sim["research_only"])
+    arch_conf        = max(conf("architecture_no_code", sim["architecture_no_code"]), _architecture_no_code_structural(candidate))
+    langchain_conf   = conf("langchain_wrapper_only",  sim["langchain_wrapper_only"])
+
+    cv_sim   = conf("cv_speech_robotics_only", sim["cv_speech_robotics_only"])
+    nlp_sim  = conf("nlp_ir_exposure", sim["nlp_ir_exposure"])
+    cv_without_nlp_conf = round(max(0.0, cv_sim - nlp_sim), 3)
 
     job_hop_conf = _job_hopper_confidence(candidate)
 
     return Disqualifiers(
         research_only_confidence=research_conf,
         architecture_no_code_confidence=arch_conf,
-        langchain_wrapper_only_confidence=langchain_only_conf,
+        langchain_wrapper_only_confidence=langchain_conf,
         cv_speech_robotics_without_nlp_confidence=cv_without_nlp_conf,
         job_hopper_confidence=job_hop_conf,
     )
