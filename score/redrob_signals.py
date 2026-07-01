@@ -158,6 +158,9 @@ def redrob_signals_score(redrob_signals: RedrobSignals) -> float:
         else:
             score -= 0.05
 
+    else:
+        score -= 0.20
+
 
     if redrob_signals.interview_completion_rate > 0.8:
         score += 0.10
