@@ -6,7 +6,7 @@ from src.build_candidate_text import build_candidate_text
 from schema.candidate_schema import CandidateSchema
 
 
-def generate_candidate_embeddings(candidates: list[CandidateSchema], EMBEDDING_MODEL):
+def generate_candidate_embeddings(candidates: list[CandidateSchema], EMBEDDING_MODEL, save: bool = True):
 
     texts = []
     candidate_ids = []
@@ -25,15 +25,19 @@ def generate_candidate_embeddings(candidates: list[CandidateSchema], EMBEDDING_M
         show_progress_bar=True
     )
 
-    np.save(
-        "candidate_embeddings.npy",
-        embeddings
-    )
+    if save:
+        np.save("candidate_embeddings.npy", embeddings)
+        np.save("candidate_ids.npy", candidate_ids)
 
-    np.save(
-        "candidate_ids.npy",
-        candidate_ids
-    )
+    # np.save(
+    #     "candidate_embeddings.npy",
+    #     embeddings
+    # )
+
+    # np.save(
+    #     "candidate_ids.npy",
+    #     candidate_ids
+    # )
 
     return embeddings, candidate_ids
 

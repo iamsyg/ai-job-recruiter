@@ -2,10 +2,11 @@
 
 from src.generate_candidate_embeddings import generate_candidate_embeddings
 from utils.load_candidates import load_candidates
+from model.embedding_model import EMBEDDING_MODEL
 
 candidates = load_candidates(file_path=r"C:\Users\Eternity\Dropbox\Projects\New folder\[PUB] India_runs_data_and_ai_challenge\[PUB] India_runs_data_and_ai_challenge\India_runs_data_and_ai_challenge\candidates.jsonl")
 
-generate_candidate_embeddings(candidates)
+generate_candidate_embeddings(candidates, EMBEDDING_MODEL=EMBEDDING_MODEL, save=True)
 
 print("Candidate embeddings generated.")
 

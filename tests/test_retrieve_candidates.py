@@ -4,7 +4,6 @@ import json
 import numpy as np
 
 from schema.candidate_schema import CandidateSchema
-from src.generate_candidate_embeddings import generate_candidate_embeddings
 from src.generate_jd_embeddings import generate_jd_embeddings
 from src.extract_jd_features import extract_jd_features
 from src.retrieve_candidates import retrieve_candidates

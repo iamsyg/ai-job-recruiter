@@ -21,6 +21,7 @@ from src.retrieve_candidates import retrieve_candidates
 from src.rerank_candidates import rerank_candidates
 
 import csv
+import numpy as np
 
 job_description = jd()
 candidates = load_candidates(file_path=r"C:\Users\Eternity\Dropbox\Projects\New folder\[PUB] India_runs_data_and_ai_challenge\[PUB] India_runs_data_and_ai_challenge\India_runs_data_and_ai_challenge\candidates.jsonl")
@@ -35,13 +36,14 @@ candidate_map = {
 
 # ============================================================== BM25 ==============================================================
 
-bm25 = build_bm25(candidates)
+bm25, candidate_ids = build_bm25(candidates, save=True)
 save_bm25(bm25)
 # loaded_bm25 = load_bm25()
 
 bm25_candidate_ids, bm25_scores = retrieve_bm25(
     query=jd_text,
     bm25=bm25,
+    candidate_ids=candidate_ids,
     top_k=1000
 )
 
@@ -68,12 +70,24 @@ embedding_score_map = dict(
     zip(candidate_ids, embedding_scores)
 )
 
+disqualifier_map = np.load(
+    "disqualifier_features.npy",
+    allow_pickle=True,
+).item()
+
+qualifier_map = np.load(
+    "qualifying_features.npy",
+    allow_pickle=True,
+).item()
+
 results = rerank_candidates(
     candidate_ids=candidate_ids,
     embedding_score_map=embedding_score_map,
     bm25_score_map=bm25_score_map,
     candidate_map=candidate_map,
     jd_schema=jd_schema,
+    qualifier_map=qualifier_map,
+    disqualifier_map=disqualifier_map,
 )
 
 print(f"BM25 retrieved {len(bm25_candidate_ids)} candidates")

@@ -25,6 +25,8 @@ def rerank_candidates(
     bm25_score_map,
     candidate_map,
     jd_schema,
+    qualifier_map,
+    disqualifier_map,
 ):
     """
     Rerank retrieved candidates using handcrafted features.
@@ -38,15 +40,15 @@ def rerank_candidates(
     bm25_min = min(bm25_score_map.values())
     bm25_max = max(bm25_score_map.values())
 
-    disqualifier_map = np.load(
-        "disqualifier_features.npy",
-        allow_pickle=True,
-    ).item()
+    # disqualifier_map = np.load(
+    #     "disqualifier_features.npy",
+    #     allow_pickle=True,
+    # ).item()
 
-    qualifier_map = np.load(
-        "qualifying_features.npy",
-        allow_pickle=True,
-    ).item()
+    # qualifier_map = np.load(
+    #     "qualifying_features.npy",
+    #     allow_pickle=True,
+    # ).item()
 
     for candidate_id in candidate_ids:
 

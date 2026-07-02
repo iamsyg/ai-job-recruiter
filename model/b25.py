@@ -15,7 +15,7 @@ def tokenize(text: str) -> list[str]:
     return re.findall(r"\b\w+\b", text.lower())
 
 
-def build_bm25(candidates: list[CandidateSchema]) -> BM25Okapi:
+def build_bm25(candidates: list[CandidateSchema], save: bool = False) -> BM25Okapi:
     """
     Build BM25 index from candidate documents.
     """
@@ -34,11 +34,12 @@ def build_bm25(candidates: list[CandidateSchema]) -> BM25Okapi:
         [candidate.candidate_id for candidate in candidates]
     )
 
-    np.save("candidate_ids.npy", candidate_ids)
+    if save:
+        np.save("candidate_ids.npy", candidate_ids)
 
     bm25 = BM25Okapi(tokenized_documents)
 
-    return bm25
+    return bm25, candidate_ids
 
 
 def save_bm25(bm25: BM25Okapi, path: str = "bm25.pkl") -> None:
@@ -62,6 +63,7 @@ def load_bm25(path: str = "bm25.pkl") -> BM25Okapi:
 def retrieve_bm25(
     query: str,
     bm25: BM25Okapi,
+    candidate_ids,
     top_k: int = 1000,
 ):
     """
@@ -72,7 +74,7 @@ def retrieve_bm25(
 
     scores = bm25.get_scores(tokens)
 
-    candidate_ids = np.load("candidate_ids.npy")
+    # candidate_ids = np.load("candidate_ids.npy")
 
     k = min(top_k, len(scores))
 
