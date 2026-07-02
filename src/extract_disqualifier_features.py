@@ -109,16 +109,16 @@ def _architecture_no_code_structural(candidate: CandidateSchema) -> float:
 
 def extract_disqualifier_features(candidate: CandidateSchema, proto_vecs: dict, candidate_embedding) -> dict:
 
-    CONF_THRESHOLDS = {
-        # (floor, ceil)
-        # floor = ~P75 of full population (above noise, below signal)
-        # ceil  = ~P95 (clearly matching the disqualifier)
-        "research_only":              (0.51, 0.56),
-        "architecture_no_code":       (0.57, 0.62),
-        "langchain_wrapper_only":     (0.59, 0.65),
-        "cv_speech_robotics_only":    (0.58, 0.65),
-        "nlp_ir_exposure":            (0.53, 0.61),  # positive signal, same logic
-    }
+    # CONF_THRESHOLDS = {
+    #     # (floor, ceil)
+    #     # floor = ~P75 of full population (above noise, below signal)
+    #     # ceil  = ~P95 (clearly matching the disqualifier)
+    #     "research_only":              (0.48, 0.50),
+    #     "architecture_no_code":       (0.57, 0.62),
+    #     "langchain_wrapper_only":     (0.59, 0.65),
+    #     "cv_speech_robotics_only":    (0.58, 0.65),
+    #     "nlp_ir_exposure":            (0.53, 0.61),  # positive signal, same logic
+    # }
 
     sim = {
         group: float((candidate_embedding @ proto_vecs[group].T).max())
@@ -133,8 +133,8 @@ def extract_disqualifier_features(candidate: CandidateSchema, proto_vecs: dict, 
 
     # cosine sims for short prototype-vs-document text typically land ~0.1–0.5;
     # rescale relative to the production_shipped baseline so scores are comparable
-    def conf(group: str, sim_val: float) -> float:
-        floor, ceil = CONF_THRESHOLDS[group]
+    def conf(group: str, sim_val: float, floor: float = 0.44, ceil: float = 0.67) -> float:
+        # floor, ceil = CONF_THRESHOLDS[group]
 
         if group == "research_only" and candidate.candidate_id == "CAND_0007411":
 

@@ -106,14 +106,41 @@ class RedrobSignals(BaseModel):
     verified_phone: bool
     linkedin_connected: bool
 
+class Disqualifiers(BaseModel):
+    research_only_confidence: float
+    architecture_no_code_confidence: float
+    langchain_wrapper_only_confidence: float
+    cv_speech_robotics_without_nlp_confidence: float
+    job_hopper_confidence: float
 
+class Qualifiers(BaseModel):
 
-# class CandidateFeatures(BaseModel):
+    production_ml_confidence: float
+    production_ml_months: int
 
-#     profile: Profile
-#     career_history: CareerHistory
-#     education: Education
-#     skills: Skills
-#     certifications: Certification
-#     is_english_proficient: Language
-#     redrob_signals: RedrobSignals
+    ir_confidence: float
+    ir_months: int
+
+    ranking_confidence: float
+    ranking_months: int
+
+    vector_db_confidence: float
+    vector_db_months: int
+
+    embedding_retrieval_confidence: float
+    embedding_retrieval_months: int
+    
+    strong_opinions_retrieval_confidence:  float
+    strong_opinions_retrieval_months: int
+
+class CandidateFeatures(BaseModel):
+
+    profile: Profile
+    career_history: CareerHistory
+    education: Education
+    skills: Skills
+    certifications: Certification
+    is_english_proficient: Language
+    redrob_signals: RedrobSignals
+    disqualifiers: Disqualifiers
+    qualifiers: Qualifiers
