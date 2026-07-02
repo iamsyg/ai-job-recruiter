@@ -7,35 +7,32 @@
 # ============================================================================
 # Team identity
 # ============================================================================
-team_name: "your-team-name-here"  # Used in leaderboard and announcements
+team_name: "riyuzaki"  # Used in leaderboard and announcements
 
 primary_contact:
-  name: "Full Name"
-  email: "primary@example.com"   # Used for all organizer communication
-  phone: "+91-XXXXXXXXXX"        # Used for top-50 / top-10 outreach
+  name: "Swayam Gupta"
+  email: "swayamg741@gmail.com"   # Used for all organizer communication
+  phone: "+91-8318416360"        # Used for top-50 / top-10 outreach
 
 team_members:
-  - name: "Member 1 Full Name"
-    email: "member1@example.com"
-    role: "ML Engineer"          # Optional, e.g. "Team Lead", "Backend", "Data"
-  - name: "Member 2 Full Name"
-    email: "member2@example.com"
-    role: "Data Engineer"
+  - name: "Swayam Gupta"
+    email: "swayamg741@gmail.com"
+    role: "Team Lead"          # Optional, e.g. "Team Lead", "Backend", "Data"
   # Add more members as needed; solo participants list just one member
 
 # ============================================================================
 # Code and reproducibility
 # ============================================================================
-github_repo: "https://github.com/YOUR_USERNAME/YOUR_REPO"
+github_repo: "https://github.com/iamsyg/ai-job-recruiter"
 # Required. Must be reachable. Private repos OK if you can grant organizer
 # access at Stage 3 (the email to add will be communicated then).
 
-sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/redrob-ranker"
+sandbox_link: "https://ai-job-recruiter-bnceabwk62qnmkty5ch6x4.streamlit.app/"
 # Required. A working hosted environment where the ranker can be run on a small
 # candidate sample. See Section 10.5 of submission_spec.md for acceptable
 # platforms (HuggingFace Spaces, Streamlit Cloud, Replit, Colab, Docker, Binder).
 
-reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+reproduce_command: "python main.py"
 # The single command that produces submission.csv from candidates.jsonl.
 # Should run end-to-end within 5 minutes on CPU with 16GB RAM and no network.
 
@@ -43,11 +40,11 @@ reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submi
 # Compute environment
 # ============================================================================
 compute:
-  platform: "MacBook Pro M2"                    # Or: "AWS EC2 c5.4xlarge", "Local Linux box", etc.
+  platform: "Acer Aspire 3"                    # Or: "AWS EC2 c5.4xlarge", "Local Linux box", etc.
   cpu_cores: 8                                  # Number of CPU cores used
   ram_gb: 16                                    # Available RAM in GB
-  python_version: "3.11.4"                      # python --version
-  os: "macOS 14.2"                              # Or "Ubuntu 22.04 LTS", etc.
+  python_version: "3.13.5"                      # python --version
+  os: "windows 11"                              # Or "Ubuntu 22.04 LTS", etc.
   uses_gpu_for_inference: false                 # Must be false — see compute constraints
   has_network_during_ranking: false             # Must be false — no API calls during ranking
   pre_computation_required: false               # true if you pre-compute embeddings or train models offline
@@ -62,28 +59,31 @@ compute:
 ai_tools_used:
   - "Claude"        # e.g. for architecture discussion, code review
   - "GitHub Copilot"  # e.g. for autocomplete
+  - "ChatGPT"      # e.g. for debugging, refactoring
   # Other options: "ChatGPT", "Cursor", "Gemini", "Codeium", "Other", "None"
 
 ai_usage_summary: |
-  Briefly describe how AI tools were used. Examples:
-  - "Used Claude for code review and architectural discussion. Used Copilot for autocomplete.
-     No candidate data was fed to any LLM."
-  - "Used ChatGPT to debug Python issues and Cursor for refactoring."
-  - "No AI tools used."
+  ChatGPT and Claude were used for architecture discussions, feature engineering,
+  debugging, code review, refactoring, and deployment guidance. GitHub Copilot
+  was used for code completion and productivity during development. No candidate
+  data was sent to external LLMs during the ranking stage. The final ranking
+  pipeline runs entirely offline without network access or external API calls.
 
 # ============================================================================
 # Approach summary (optional but recommended)
 # ============================================================================
 methodology_summary: |
-  ≤200 word summary of your approach. Strongly recommended.
-
-  Example:
-  "Rule-based ranker with explicit reasoning capture. Five scoring components
-  (skills, title+career, experience years, location, education) combined with
-  a multiplicative behavioral-signal modifier. The title component is the
-  decisive signal against keyword-stuffer traps; an endorsement-and-duration
-  trust multiplier on skills catches lazy keyword stuffing. Runtime is ~10
-  seconds for 50K candidates on CPU."
+  The ranking system uses a hybrid retrieval pipeline combining lexical search,
+  semantic embeddings, and handcrafted feature engineering. BM25 first retrieves
+  relevant candidates based on the job description. A BGE embedding model then
+  performs semantic retrieval using cosine similarity. Retrieved candidates are
+  reranked using weighted features including skills, career history, education,
+  certifications, language proficiency, relocation preference, Redrob behavioral
+  signals, qualifying signals, and disqualifying signals. The final score is a
+  weighted combination of embedding similarity, BM25 relevance, and engineered
+  feature scores, with deterministic candidate ID tie-breaking to ensure stable
+  rankings. Candidate embeddings and behavioral features are precomputed offline
+  to satisfy runtime constraints.
 
 # ============================================================================
 # Declarations
