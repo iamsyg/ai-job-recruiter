@@ -1,0 +1,101 @@
+candidate_id,rank,score,reasoning
+CAND_0005260,1,0.607,5.2 years of professional experience.; Extensive experience in product-based companies (61 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0081846,2,0.607,6.7 years of professional experience.; Extensive experience in product-based companies (79 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0018499,3,0.589,7.2 years of professional experience.; Extensive experience in product-based companies (86 months).. Concern: Redrob signals indicate work mode mismatch.
+CAND_0007411,4,0.573,8.0 years of professional experience.; Extensive experience in product-based companies (95 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0039754,5,0.568,16.2 years of professional experience.; Extensive experience in product-based companies (98 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0086022,6,0.566,5.3 years of professional experience.; Extensive experience in startup-based companies (25 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0046064,7,0.558,8.9 years of professional experience.; Extensive experience in startup-based companies (34 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0092278,8,0.555,6.8 years of professional experience.; Extensive experience in startup-based companies (21 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0094759,9,0.532,8.6 years of professional experience.; Extensive experience in startup-based companies (41 months).. Concern: Redrob signals indicate inactivity for more than 90 days.
+CAND_0008425,10,0.527,7.8 years of professional experience.; Extensive experience in product-based companies (92 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0041669,11,0.526,8.0 years of professional experience.; Extensive experience in product-based companies (95 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0011687,12,0.524,7.8 years of professional experience.; Extensive experience in startup-based companies (52 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0012957,13,0.511,Extensive experience in product-based companies (58 months).; Consistent technical career progression.. Concern: Willing to relocate but location not matched with job description.
+CAND_0052328,14,0.511,6.5 years of professional experience.; Extensive experience in product-based companies (77 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0042506,15,0.508,Extensive experience in startup-based companies (18 months).; Extensive experience in product-based companies (50 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0086151,16,0.508,7.7 years of professional experience.; Extensive experience in startup-based companies (26 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0033861,17,0.505,8.0 years of professional experience.; Extensive experience in startup-based companies (39 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0046525,18,0.504,6.1 years of professional experience.; Extensive experience in product-based companies (25 months).. Concern: Extensive experience in service-based companies (48 months).
+CAND_0037980,19,0.503,9.0 years of professional experience.; Extensive experience in startup-based companies (76 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0002025,20,0.499,5.9 years of professional experience.; Extensive experience in startup-based companies (28 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0093547,21,0.499,Extensive experience in startup-based companies (52 months).; Extensive experience in product-based companies (74 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0026532,22,0.496,Extensive experience in product-based companies (56 months).; Consistent technical career progression.. Concern: Willing to relocate but location not matched with job description.
+CAND_0049896,23,0.494,7.3 years of professional experience.; Extensive experience in product-based companies (87 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0076831,24,0.494,Extensive experience in product-based companies (47 months).; Consistent technical career progression.. Concern: Willing to relocate but location not matched with job description.
+CAND_0006557,25,0.493,7.9 years of professional experience.; Extensive experience in product-based companies (94 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0009837,26,0.492,Extensive experience in startup-based companies (51 months).; Extensive experience in product-based companies (51 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0006567,27,0.491,7.9 years of professional experience.; Extensive experience in product-based companies (94 months).. Concern: Redrob signals indicate work mode mismatch.
+CAND_0018722,28,0.491,6.6 years of professional experience.; Extensive experience in startup-based companies (28 months).. Concern: Country not matched with job description.
+CAND_0042029,29,0.489,6.5 years of professional experience.; Extensive experience in product-based companies (78 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0047721,30,0.489,7.0 years of professional experience.; Extensive experience in product-based companies (84 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0028793,31,0.488,7.2 years of professional experience.; Extensive experience in product-based companies (85 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0076251,32,0.486,7.6 years of professional experience.; Extensive experience in product-based companies (91 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0055905,33,0.485,8.1 years of professional experience.; Extensive experience in startup-based companies (45 months).. Concern: Country not matched with job description.
+CAND_0066376,34,0.481,5.7 years of professional experience.; Extensive experience in product-based companies (67 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0069905,35,0.481,6.6 years of professional experience.; Extensive experience in startup-based companies (26 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0071974,36,0.48,7.8 years of professional experience.; Extensive experience in product-based companies (92 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0019480,37,0.478,Extensive experience in product-based companies (87 months).; Consistent technical career progression.. Concern: Willing to relocate but location not matched with job description.
+CAND_0077337,38,0.478,7.0 years of professional experience.; Extensive experience in product-based companies (83 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0041610,39,0.477,6.7 years of professional experience.; Extensive experience in product-based companies (79 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0079064,40,0.476,5.2 years of professional experience.; Extensive experience in startup-based companies (44 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0070398,41,0.475,7.2 years of professional experience.; Extensive experience in product-based companies (48 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0037566,42,0.474,6.9 years of professional experience.; Extensive experience in product-based companies (82 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0044855,43,0.469,6.6 years of professional experience.; Extensive experience in startup-based companies (25 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0031593,44,0.468,7.8 years of professional experience.; Extensive experience in startup-based companies (33 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0000031,45,0.467,6.0 years of professional experience.; Extensive experience in product-based companies (70 months).
+CAND_0007009,46,0.466,7.9 years of professional experience.; Extensive experience in startup-based companies (14 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0054394,47,0.465,Extensive experience in product-based companies (48 months).; Consistent technical career progression.. Concern: Not willing to relocate and location not matched with job description.
+CAND_0099806,48,0.465,Extensive experience in product-based companies (54 months).; Current role 'AI Engineer' is directly relevant.. Concern: Willing to relocate but location not matched with job description.
+CAND_0017960,49,0.462,7.7 years of professional experience.; Extensive experience in startup-based companies (37 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0005649,50,0.457,7.4 years of professional experience.; Extensive experience in startup-based companies (30 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0051004,51,0.455,Extensive experience in startup-based companies (32 months).; Extensive experience in product-based companies (56 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0018549,52,0.454,6.8 years of professional experience.; Extensive experience in product-based companies (81 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0088025,53,0.454,8.6 years of professional experience.; Extensive experience in startup-based companies (44 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0061257,54,0.453,8.0 years of professional experience.; Extensive experience in product-based companies (95 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0096142,55,0.452,5.0 years of professional experience.; Extensive experience in product-based companies (42 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0036437,56,0.449,Extensive experience in startup-based companies (21 months).; Extensive experience in product-based companies (56 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0024466,57,0.447,5.2 years of professional experience.; Extensive experience in product-based companies (62 months).. Concern: Country not matched with job description.
+CAND_0007460,58,0.445,Extensive experience in product-based companies (56 months).; Consistent technical career progression.. Concern: Not willing to relocate and location not matched with job description.
+CAND_0037000,59,0.445,Extensive experience in product-based companies (75 months).; Consistent technical career progression.. Concern: Not willing to relocate and location not matched with job description.
+CAND_0080766,60,0.444,8.8 years of professional experience.; Extensive experience in startup-based companies (12 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0084819,61,0.443,Extensive experience in product-based companies (53 months).; Consistent technical career progression.. Concern: Not willing to relocate and location not matched with job description.
+CAND_0011162,62,0.44,5.8 years of professional experience.; Extensive experience in product-based companies (68 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0030348,63,0.44,Extensive experience in product-based companies (25 months).; Consistent technical career progression.. Concern: Not willing to relocate and location not matched with job description.
+CAND_0062247,64,0.44,7.3 years of professional experience.; Extensive experience in product-based companies (87 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0081852,65,0.437,5.9 years of professional experience.; Extensive experience in product-based companies (70 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0099401,66,0.437,7.7 years of professional experience.; Extensive experience in startup-based companies (16 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0027691,67,0.434,6.5 years of professional experience.; Extensive experience in product-based companies (76 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0027801,68,0.434,7.4 years of professional experience.; Extensive experience in product-based companies (87 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0037944,69,0.434,Extensive experience in product-based companies (58 months).; Consistent technical career progression.. Concern: Not willing to relocate and location not matched with job description.
+CAND_0091909,70,0.433,6.9 years of professional experience.; Extensive experience in startup-based companies (51 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0061265,71,0.432,6.6 years of professional experience.; Extensive experience in product-based companies (78 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0065195,72,0.431,5.1 years of professional experience.; Extensive experience in product-based companies (61 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0094056,73,0.431,5.9 years of professional experience.; Extensive experience in startup-based companies (36 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0098846,74,0.431,7.6 years of professional experience.; Extensive experience in product-based companies (90 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0074225,75,0.43,Extensive experience in product-based companies (51 months).; Consistent technical career progression.. Concern: Willing to relocate but location not matched with job description.
+CAND_0055992,76,0.429,16.9 years of professional experience.; Extensive experience in startup-based companies (15 months).. Concern: Country not matched with job description.
+CAND_0083307,77,0.428,7.8 years of professional experience.; Extensive experience in product-based companies (85 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0083879,78,0.428,7.1 years of professional experience.; Extensive experience in product-based companies (84 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0015578,79,0.427,5.4 years of professional experience.; Extensive experience in product-based companies (64 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0057701,80,0.424,Extensive experience in startup-based companies (49 months).; Extensive experience in product-based companies (49 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0006418,81,0.423,5.7 years of professional experience.; Extensive experience in startup-based companies (40 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0040117,82,0.422,6.5 years of professional experience.; Extensive experience in product-based companies (77 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0030468,83,0.421,5.4 years of professional experience.; Extensive experience in startup-based companies (32 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0070202,84,0.421,5.1 years of professional experience.; Extensive experience in product-based companies (12 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0036863,85,0.42,Extensive experience in product-based companies (51 months).; Consistent technical career progression.. Concern: Willing to relocate but location not matched with job description.
+CAND_0075249,86,0.42,6.2 years of professional experience.; Extensive experience in product-based companies (74 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0064326,87,0.419,7.6 years of professional experience.; Extensive experience in startup-based companies (55 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0044883,88,0.417,6.3 years of professional experience.; Extensive experience in product-based companies (74 months).. Concern: Country not matched with job description.
+CAND_0092245,89,0.416,Extensive experience in product-based companies (49 months).; Current role 'Senior Data Scientist' is directly relevant.. Concern: Not willing to relocate and location not matched with job description.
+CAND_0043318,90,0.415,6.2 years of professional experience.; Extensive experience in product-based companies (73 months).. Concern: Country not matched with job description.
+CAND_0005311,91,0.413,5.7 years of professional experience.; Extensive experience in startup-based companies (40 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0009691,92,0.413,6.2 years of professional experience.; Extensive experience in product-based companies (43 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0010770,93,0.413,15.2 years of professional experience.; Extensive experience in startup-based companies (74 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0091534,94,0.413,16.6 years of professional experience.; Extensive experience in product-based companies (85 months).. Concern: Willing to relocate but location not matched with job description.
+CAND_0093193,95,0.411,7.9 years of professional experience.; Extensive experience in startup-based companies (44 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0045250,96,0.41,6.6 years of professional experience.; Extensive experience in startup-based companies (46 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0065878,97,0.41,7.8 years of professional experience.; Extensive experience in startup-based companies (39 months).. Concern: Not willing to relocate and location not matched with job description.
+CAND_0020708,98,0.408,Extensive experience in product-based companies (50 months).; Consistent technical career progression.. Concern: Not willing to relocate and location not matched with job description.
+CAND_0076904,99,0.408,Extensive experience in product-based companies (49 months).; Consistent technical career progression.. Concern: Country not matched with job description.
+CAND_0014440,100,0.407,6.4 years of professional experience.; Extensive experience in product-based companies (76 months).. Concern: Not willing to relocate and location not matched with job description.
