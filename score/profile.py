@@ -12,14 +12,13 @@ def profile_score(profile: Profile) -> float:
 
     if profile.country_match:
         if profile.location_match:
-            score += 0.1
+            score += 0.10
+        elif profile.willing_to_relocate:
+            score += 0.05
         else:
-            if profile.willing_to_relocate:
-                score += 0.05
-            else:
-                score -= 0.2
+            score += 0.00      # don't heavily penalize here
     else:
-        score -= 0.2
+        score -= 0.20
 
 
     if profile.experience_gap <= 1:

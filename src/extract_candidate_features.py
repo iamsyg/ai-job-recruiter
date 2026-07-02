@@ -748,7 +748,16 @@ def extract_redrob_signals(candidate: CandidateSchema, jd_features: JDSchema):
 
     # work_mode_match = jd_features.work_mode == candidate.redrob_signals.preferred_work_mode
 
-    work_mode_match = candidate.redrob_signals.preferred_work_mode in  jd_features.work_mode
+    # work_mode_match = candidate.redrob_signals.preferred_work_mode in  jd_features.work_mode
+
+    candidate_mode = candidate.redrob_signals.preferred_work_mode
+    jd_mode = jd_features.work_mode
+
+    work_mode_match = (
+        candidate_mode == "flexible"
+        or jd_mode == "flexible"
+        or candidate_mode == jd_mode
+    )
 
     return RedrobSignals(
         profile_completeness_category=profile_completeness_category,
