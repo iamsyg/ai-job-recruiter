@@ -9,6 +9,8 @@ import os
 import json
 from schema.jd_schema import JDSchema
 
+from google.genai.errors import ServerError
+
 def extract_jd_features(jd_text: str) -> JDSchema:
 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
@@ -155,13 +157,25 @@ def extract_jd_features(jd_text: str) -> JDSchema:
 
     """
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
-        config={
-            "response_mime_type": "application/json",
-            "response_schema": JDSchema,
-        }
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+            config={
+                "response_mime_type": "application/json",
+                "response_schema": JDSchema,
+            }
+        )
 
-    return JDSchema.model_validate_json(response.text)
+        return JDSchema.model_validate_json(response.text)
+    
+    except ServerError as e:
+        raise RuntimeError(
+            "The AI service is currently experiencing high demand. "
+            "Please wait a few minutes and try again."
+        ) from e
+
+    except Exception as e:
+        raise RuntimeError(
+            f"Failed to extract job description features: {e}"
+        ) from e
