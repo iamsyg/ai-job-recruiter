@@ -297,6 +297,9 @@ No hosted LLM APIs are used during the ranking stage.
 GitHub:
 https://github.com/iamsyg
 
+Streamlit:
+https://ai-job-recruiter-bnceabwk62qnmkty5ch6x4.streamlit.app/
+
 ---
 
 # License
